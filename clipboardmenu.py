@@ -66,8 +66,15 @@ def save_config(cfg):
 
 def _exe_path():
     if getattr(sys, "frozen", False):
+        # If compiled to .exe, just return the .exe path
         return sys.executable
-    return f'"{sys.executable}" "{os.path.abspath(__file__)}"'
+    
+    # If running as a raw .py script, force 'pythonw.exe' so no CMD window appears
+    python_path = sys.executable
+    if python_path.lower().endswith("python.exe"):
+        python_path = python_path[:-10] + "pythonw.exe"
+        
+    return f'"{python_path}" "{os.path.abspath(__file__)}"'
 
 def add_to_startup():
     try:
