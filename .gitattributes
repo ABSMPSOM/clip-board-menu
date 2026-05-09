@@ -1,11 +1,13 @@
-# Language Detection Overrides
-# Treat README and other docs as documentation so they don't count toward stats
-*.md linguist-documentation
-*.txt linguist-documentation
+# Step 1: Tell GitHub to ignore everything (treat as vendored/documentation)
+* linguist-vendored
+* linguist-documentation
 
-# Alternatively, explicitly tell GitHub to ignore HTML and TeX detection
-*.html linguist-detectable=false
-*.tex linguist-detectable=false
-
-# If you want to be extra sure, force the repo to prioritize Python
+# Step 2: Create a strict exception ONLY for Python files
+*.py linguist-vendored=false
 *.py linguist-detectable=true
+*.py linguist-documentation=false
+
+# Step 3: Explicitly kill the TeX and HTML detection
+*.tex linguist-detectable=false
+*.md linguist-detectable=false
+*.html linguist-detectable=false
